@@ -9,8 +9,14 @@ import SwiftUI
 
 struct VideogamesListView: View {
     
-    @StateObject private var gamesViewModel = VideogameViewModel()
+    @Environment(\.managedObjectContext) private var context
+    
+    @StateObject private var gamesViewModel: VideogameViewModel
     @State private var isLoading: Bool = false
+    
+    init() {
+        _gamesViewModel = StateObject(wrappedValue: VideogameViewModel(context: PersistenceController.shared.container.viewContext))
+    }
     
     var body: some View {
         ZStack {
@@ -28,7 +34,9 @@ struct VideogamesListView: View {
                     withAnimation {
                         isLoading = false
                     }
-                    gamesViewModel.fetchGames()
+                    if gamesViewModel.loadFromDB().isEmpty {
+                        gamesViewModel.fetchGames()
+                    }
                 }
                 .onReceive(gamesViewModel.$videogame) { _ in
                     withAnimation {

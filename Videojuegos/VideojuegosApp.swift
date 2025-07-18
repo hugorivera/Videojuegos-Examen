@@ -9,10 +9,11 @@ import SwiftUI
 
 @main
 struct VideojuegosApp: App {
+    let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
             NavigationStack {
-                VideogamesListView()
+                VideogamesListView().environment(\.managedObjectContext, persistenceController.container.viewContext)
             }
         }
     }
