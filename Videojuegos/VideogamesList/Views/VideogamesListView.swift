@@ -24,10 +24,11 @@ struct VideogamesListView: View {
                 ProgressView()
             }
             List {
-                ForEach(gamesViewModel.videogame) { videogame in
+                ForEach(gamesViewModel.filteredGames) { videogame in
                     VideogameCell(videogame: videogame)
                 }
             }.listStyle(.plain)
+                .searchable(text: $gamesViewModel.searchText, prompt: "Buscar videojuego")
                 .navigationTitle("Videojuegos")
                 .navigationBarTitleDisplayMode(.automatic)
                 .onAppear {

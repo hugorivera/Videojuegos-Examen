@@ -11,8 +11,20 @@ import CoreData
 
 class VideogameViewModel: ObservableObject {
     @Published var videogame: [Videogame] = []
+    @Published var searchText: String = ""
     
     private let context: NSManagedObjectContext
+    
+    var filteredGames: [Videogame] {
+        if searchText.isEmpty {
+            return videogame
+        } else {
+            return videogame.filter {
+                $0.title.localizedCaseInsensitiveContains(searchText) ||
+                $0.genre.localizedCaseInsensitiveContains(searchText)
+            }
+        }
+    }
 
     init(context: NSManagedObjectContext) {
         self.context = context

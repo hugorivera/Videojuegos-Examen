@@ -12,12 +12,15 @@ struct VideogameCell: View {
     var body: some View {
         HStack(spacing: 20) {
             getAsyncImage(url: videogame.thumbnail).padding()
-            Text(videogame.title)
+            VStack(spacing: 10) {
+                Text(videogame.title).font(.headline).multilineTextAlignment(.center).frame(maxWidth: .infinity)
+                Text(videogame.genre).font(.caption).multilineTextAlignment(.center).frame(maxWidth: .infinity)
+            }
             Spacer()
         }
     }
 }
 
 #Preview {
-    //VideogameCell(videogame: Videogame(id: "1", name: "Nombre", image: "thumb"))
+    VideogameCell(videogame: Videogame.preview)
 }
