@@ -11,13 +11,13 @@ struct VideogameCell: View {
     let videogame: Videogame
     var body: some View {
         HStack(spacing: 20) {
-            Image("thumb").resizable().frame(width: 100, height: 50).scaledToFit().padding()
-            Text("Nombre del videojuego")
+            getAsyncImage(url: videogame.thumbnail).padding()
+            Text(videogame.title)
             Spacer()
         }
     }
 }
 
 #Preview {
-    VideogameCell(videogame: Videogame(id: "1", name: "Nombre", image: "thumb"))
+    //VideogameCell(videogame: Videogame(id: "1", name: "Nombre", image: "thumb"))
 }

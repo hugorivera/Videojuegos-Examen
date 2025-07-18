@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		EF77AB7D2E2ACA5400509683 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = EF77AB7C2E2ACA5400509683 /* Alamofire */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		EF77AB5B2E2ABE4F00509683 /* Videojuegos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Videojuegos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EF77AB7D2E2ACA5400509683 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = Videojuegos;
 			packageProductDependencies = (
+				EF77AB7C2E2ACA5400509683 /* Alamofire */,
 			);
 			productName = Videojuegos;
 			productReference = EF77AB5B2E2ABE4F00509683 /* Videojuegos.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = EF77AB522E2ABE4F00509683;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				EF77AB7B2E2ACA5400509683 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = EF77AB5C2E2ABE4F00509683 /* Products */;
 			projectDirPath = "";
@@ -324,6 +333,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EF77AB7B2E2ACA5400509683 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EF77AB7C2E2ACA5400509683 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EF77AB7B2E2ACA5400509683 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EF77AB532E2ABE4F00509683 /* Project object */;
 }

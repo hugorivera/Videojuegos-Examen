@@ -11,7 +11,9 @@ import SwiftUI
 struct VideojuegosApp: App {
     var body: some Scene {
         WindowGroup {
-            VideogamesListView()
+            NavigationStack {
+                VideogamesListView()
+            }
         }
     }
 }
