@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+enum Route: Hashable, Equatable {
+    case videogameDetail(Videogame)
+}
+
 struct VideogamesListView: View {
     
     @Environment(\.managedObjectContext) private var context
@@ -25,7 +29,9 @@ struct VideogamesListView: View {
             }
             List {
                 ForEach(gamesViewModel.filteredGames) { videogame in
-                    VideogameCell(videogame: videogame)
+                    NavigationLink(value: Route.videogameDetail(videogame)){
+                        VideogameCell(videogame: videogame)
+                    }
                 }
             }.listStyle(.plain)
                 .searchable(text: $gamesViewModel.searchText, prompt: "Buscar videojuego")
@@ -42,6 +48,12 @@ struct VideogamesListView: View {
                 .onReceive(gamesViewModel.$videogame) { _ in
                     withAnimation {
                         isLoading = false
+                    }
+                }
+                .navigationDestination(for: Route.self) { destination in
+                    switch destination {
+                    case .videogameDetail(let videogame):
+                        VideogameDetailView(game: videogame)
                     }
                 }
         }
