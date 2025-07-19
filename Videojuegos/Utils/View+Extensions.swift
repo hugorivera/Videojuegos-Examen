@@ -10,23 +10,6 @@ import SwiftUI
 
 extension View {
     
-    func getAsyncImage(url: String) -> some View {
-        AsyncImage(url: URL(string: url)) { phase in
-            ZStack {
-                switch phase {
-                case .success(let image):
-                    image.resizable().scaledToFit()
-                case .failure:
-                    Image("thumb").resizable().scaledToFit()
-                case .empty:
-                    ProgressView()
-                default:
-                    EmptyView()
-                }
-            }.frame(width: 100, height: 50)
-        }
-    }
-    
     func getAsyncImage(url: String, maxWidth: CGFloat, maxHeight: CGFloat) -> some View {
         AsyncImage(url: URL(string: url)) { phase in
             ZStack {
