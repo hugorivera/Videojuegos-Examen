@@ -25,39 +25,56 @@ struct VideogameDetailView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack {
-                getAsyncImage(url: game.thumbnail, maxWidth: .infinity, maxHeight: 200)
-                TextField("Título", text: $title).textFieldStyle(RoundedBorderTextFieldStyle()).padding().disabled(!isEditing)
-                TextEditor(text: $description)
-                    .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 200)
-                    .overlay(RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.gray, lineWidth: 1))
-                    .padding().disabled(!isEditing)
-                Button("Borrar videojuego", action: {
-                    showDeleteAlert = true
-                }).foregroundColor(.red).frame(width: 150, height: 40, alignment: .center).padding()
-                Spacer()
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    if isEditing {
-                        if title.isEmpty || description.isEmpty {
-                            alertMessage = "Por favor, completa todos los campos antes de guardar."
-                            showAlert = true
-                            return
-                        } else {
-                            detailViewModel.updateVideogame(id: Int64(game.id), newTitle: title, newDescription: description)
-                        }
-                    }
-                    isEditing.toggle()
-                }) {
-                    Image(systemName: isEditing ? "square.and.arrow.down.fill" : "pencil.circle.fill").animation(nil)
+        ZStack(alignment: .topTrailing) {
+            ScrollView {
+                VStack {
+                    getAsyncImage(url: game.thumbnail, maxWidth: .infinity, maxHeight: 300)
+                    
+                    VStack {
+                        TextField("Título", text: $title).textFieldStyle(RoundedBorderTextFieldStyle()).padding().disabled(!isEditing)
+                        TextEditor(text: $description)
+                            .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 200)
+                            .overlay(RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray, lineWidth: 1))
+                            .padding().disabled(!isEditing)
+                        Button(isEditing ? "Guardar" : "Editar", action: {
+                            if isEditing {
+                                if title.isEmpty || description.isEmpty {
+                                    alertMessage = "Por favor, completa todos los campos antes de guardar."
+                                    showAlert = true
+                                    return
+                                } else {
+                                    detailViewModel.updateVideogame(id: Int64(game.id), newTitle: title, newDescription: description)
+                                }
+                            }
+                            isEditing.toggle()
+                        }).frame(width: 150, height: 40, alignment: .center).padding()
+                        Spacer()
+                    }.padding()
+                        .background(
+                        RoundedRectangle(cornerRadius: 16)
+                            .fill(Color(.systemBackground))
+                            .shadow(color: .black.opacity(0.1), radius: 6, x: 0, y: 4))
+                        .padding(.horizontal)
+                                    .offset(y: -40)
+                    Button("Borrar videojuego", action: {
+                        showDeleteAlert = true
+                    }).foregroundColor(.red).frame(width: 150, height: 40, alignment: .center).padding()
+                    
                 }
             }
+            .ignoresSafeArea(edges: .top)
+            Button(action: {
+                    dismiss()
+                }) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 28))
+                        .foregroundColor(.gray)
+                        .padding()
+                }
         }
+        
+        .navigationBarHidden(true)
         .onAppear {
             title = game.title
             description = game.shortDescription
