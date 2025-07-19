@@ -7,13 +7,7 @@
 
 import SwiftUI
 
-enum Route: Hashable, Equatable {
-    case videogameDetail(Videogame)
-}
-
 struct VideogamesListView: View {
-    
-    @Environment(\.managedObjectContext) private var context
     
     @StateObject private var gamesViewModel: VideogameViewModel
     @State private var isLoading: Bool = false
@@ -39,23 +33,16 @@ struct VideogamesListView: View {
                 .searchable(text: $gamesViewModel.searchText, prompt: "Buscar videojuego")
                 .navigationTitle("Videojuegos")
                 .navigationBarTitleDisplayMode(.automatic)
+                .navigationBarBackButtonHidden()
                 .onAppear {
                     withAnimation {
-                        isLoading = false
+                        isLoading = true
                     }
-                    if gamesViewModel.loadFromDB().isEmpty {
-                        gamesViewModel.fetchGames()
-                    }
+                    _ = gamesViewModel.loadFromDB()
                 }
                 .onReceive(gamesViewModel.$videogame) { _ in
                     withAnimation {
                         isLoading = false
-                    }
-                }
-                .navigationDestination(for: Route.self) { destination in
-                    switch destination {
-                    case .videogameDetail(let videogame):
-                        VideogameDetailView(game: videogame)
                     }
                 }
         }

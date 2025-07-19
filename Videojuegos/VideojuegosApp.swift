@@ -12,9 +12,7 @@ struct VideojuegosApp: App {
     let persistenceController = PersistenceController.shared
     var body: some Scene {
         WindowGroup {
-            NavigationStack {
-                VideogamesListView().environment(\.managedObjectContext, persistenceController.container.viewContext)
-            }
+            IntroView().environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
 }
