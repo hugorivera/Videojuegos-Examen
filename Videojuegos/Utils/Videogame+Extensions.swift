@@ -19,6 +19,7 @@ extension Videogame {
         publisher: "Tencent",
         developer: "Level Infinite",
         releaseDate: "2024-06-22",
-        freetogameProfileURL: "https://www.freetogame.com/tarisland"
+        freetogameProfileURL: "https://www.freetogame.com/tarisland",
+        isVideogameDeleted: false
     )
 }

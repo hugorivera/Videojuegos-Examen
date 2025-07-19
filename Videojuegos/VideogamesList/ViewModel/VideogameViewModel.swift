@@ -62,6 +62,7 @@ class VideogameViewModel: ObservableObject {
             entity.developer = game.developer
             entity.releaseDate = game.releaseDate
             entity.freetogameProfileURL = game.freetogameProfileURL
+            entity.isVideogameDeleted = false
         }
 
         do {
@@ -87,7 +88,8 @@ class VideogameViewModel: ObservableObject {
                     publisher: $0.publisher ?? "",
                     developer: $0.developer ?? "",
                     releaseDate: $0.releaseDate ?? "",
-                    freetogameProfileURL: $0.freetogameProfileURL ?? ""
+                    freetogameProfileURL: $0.freetogameProfileURL ?? "",
+                    isVideogameDeleted: $0.isVideogameDeleted
                 )
             }
             return self.videogame

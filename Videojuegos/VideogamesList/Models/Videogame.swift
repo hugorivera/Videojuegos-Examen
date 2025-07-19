@@ -19,6 +19,7 @@ struct Videogame: Codable, Identifiable, Hashable {
     let developer: String
     let releaseDate: String
     let freetogameProfileURL: String
+    let isVideogameDeleted: Bool?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -32,6 +33,7 @@ struct Videogame: Codable, Identifiable, Hashable {
         case developer
         case releaseDate = "release_date"
         case freetogameProfileURL = "freetogame_profile_url"
+        case isVideogameDeleted
     }
 }
 

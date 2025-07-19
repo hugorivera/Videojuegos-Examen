@@ -29,8 +29,10 @@ struct VideogamesListView: View {
             }
             List {
                 ForEach(gamesViewModel.filteredGames) { videogame in
-                    NavigationLink(value: Route.videogameDetail(videogame)){
-                        VideogameCell(videogame: videogame)
+                    if !(videogame.isVideogameDeleted ?? false) {
+                        NavigationLink(value: Route.videogameDetail(videogame)){
+                            VideogameCell(videogame: videogame)
+                        }
                     }
                 }
             }.listStyle(.plain)
