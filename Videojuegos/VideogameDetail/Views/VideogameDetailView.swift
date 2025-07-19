@@ -28,7 +28,7 @@ struct VideogameDetailView: View {
         ScrollView {
             VStack {
                 getAsyncImage(url: game.thumbnail, maxWidth: .infinity, maxHeight: 200)
-                TextField("Titulo", text: $title).textFieldStyle(RoundedBorderTextFieldStyle()).padding().disabled(!isEditing)
+                TextField("Título", text: $title).textFieldStyle(RoundedBorderTextFieldStyle()).padding().disabled(!isEditing)
                 TextEditor(text: $description)
                     .frame(maxWidth: .infinity, minHeight: 200, maxHeight: 200)
                     .overlay(RoundedRectangle(cornerRadius: 8)
@@ -69,7 +69,7 @@ struct VideogameDetailView: View {
                 dismissButton: .default(Text("OK"))
             )
         }
-        .alert("Borrar videojuego?", isPresented: $showDeleteAlert) {
+        .alert("¿Borrar videojuego?", isPresented: $showDeleteAlert) {
             Button("Borrar", role: .destructive) {
                 detailViewModel.deleteVideogame(id: Int64(game.id))
                 dismiss()
