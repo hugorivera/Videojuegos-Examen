@@ -18,7 +18,9 @@ struct IntroView: View {
     @StateObject private var introViewModel: IntroViewModel
     @State private var startList: Bool = false
     @State private var path = NavigationPath()
-    
+    @State private var showErrorAlert = false
+    @State private var errorMessage = ""
+
     init() {
         _introViewModel = StateObject(wrappedValue: IntroViewModel(context: PersistenceController.shared.container.viewContext))
     }
@@ -29,13 +31,18 @@ struct IntroView: View {
                 ProgressView()
                 Text("Cargando...")
             }.onAppear {
-                if introViewModel.loadFromDB().isEmpty {
-                    introViewModel.fetchGames {
-                        path.append(Route.videogamesList)
-                    }
-                } else {
-                    path.append(Route.videogamesList)
+                Task {
+                    await loadOrRetry()
                 }
+            }
+            .alert("Error", isPresented: $showErrorAlert) {
+                Button("Reintentar", role: .cancel) {
+                    Task {
+                        await loadOrRetry()
+                    }
+                }
+            } message: {
+                Text(errorMessage)
             }
             .navigationDestination(for: Route.self) { route in
                 switch route {
@@ -47,6 +54,19 @@ struct IntroView: View {
             }
         }
     }
+    
+    func loadOrRetry() async {
+        do {
+            if introViewModel.loadFromDB().isEmpty {
+                try await introViewModel.fetchGamesAsync()
+            }
+            path.append(Route.videogamesList)
+        } catch {
+            errorMessage = error.localizedDescription
+            showErrorAlert = true
+        }
+    }
+
 }
 
 #Preview {

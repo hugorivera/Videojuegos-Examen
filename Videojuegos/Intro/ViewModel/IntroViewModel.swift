@@ -37,6 +37,23 @@ class IntroViewModel: ObservableObject {
         }
     }
     
+    func fetchGamesAsync() async throws {
+        let url = "https://www.freetogame.com/api/games"
+        
+        let response = await AF.request(url).serializingDecodable([Videogame].self).response
+        
+        switch response.result {
+        case .success(let videogames):
+            await MainActor.run {
+                self.saveToDB(videogames) {
+                    self.videogame = videogames
+                }
+            }
+        case .failure(let error):
+            throw error
+        }
+    }
+    
     private func saveToDB(_ games: [Videogame], completion: @escaping () -> Void) {
 
         for game in games {
